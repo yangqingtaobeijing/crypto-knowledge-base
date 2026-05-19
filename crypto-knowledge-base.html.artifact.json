@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "kind": "html",
+  "title": "加密货币知识与资源中心",
+  "entry": "crypto-knowledge-base.html",
+  "renderer": "html",
+  "status": "complete",
+  "exports": [
+    "html",
+    "pdf",
+    "zip"
+  ],
+  "createdAt": "2026-05-19T02:55:25.385Z",
+  "updatedAt": "2026-05-19T02:55:25.398Z",
+  "sourceSkillId": "agent-browser",
+  "designSystemId": "default",
+  "metadata": {
+    "identifier": "crypto-knowledge-base",
+    "artifactType": "text/html",
+    "inferred": false
+  }
+}
