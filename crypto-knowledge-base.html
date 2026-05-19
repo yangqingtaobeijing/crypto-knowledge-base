@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -13,6 +12,11 @@
       --muted:   oklch(50% 0.018 240);
       --border:  oklch(90% 0.006 240);
       --accent:  oklch(56% 0.12 170);
+      
+      --accent-btc: #F7931A;
+      --accent-eth: #627EEA;
+      --accent-sol: #14F195;
+      --accent-bnb: #F3BA2F;
 
       --font-display: 'Söhne', 'Avenir Next', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
       --font-body:    -apple-system, BlinkMacSystemFont, 'SF Pro Text', system-ui, sans-serif;
@@ -30,6 +34,7 @@
       color: var(--fg);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
 
     h1, h2, h3, h4 {
@@ -54,9 +59,9 @@
     header {
       position: sticky;
       top: 0;
-      background: rgba(255, 255, 255, 0.8);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
       z-index: 100;
       padding: 16px 0;
@@ -74,13 +79,13 @@
       font-weight: 700;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
     .logo-icon {
-      width: 32px;
-      height: 32px;
-      background: var(--accent);
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), #2A4858);
       border-radius: var(--radius-sm);
       display: flex;
       align-items: center;
@@ -88,6 +93,7 @@
       color: white;
       font-weight: bold;
       font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
     .nav-links {
@@ -106,15 +112,56 @@
       color: var(--fg);
     }
 
-    /* Hero */
+    /* Hero Section */
     .hero {
-      padding: 100px 0 80px;
+      position: relative;
+      padding: 120px 0 100px;
       text-align: center;
+      overflow: hidden;
+    }
+
+    /* Abstract Background Graphics */
+    .hero-bg-pattern {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      opacity: 0.4;
+      background-image: radial-gradient(var(--border) 1px, transparent 1px);
+      background-size: 32px 32px;
+    }
+
+    .hero-blob {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(92,204,180,0.15) 0%, rgba(255,255,255,0) 70%);
+      top: -200px;
+      left: -150px;
+      z-index: -1;
+      filter: blur(40px);
+    }
+    
+    .hero-blob-2 {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(42,72,88,0.1) 0%, rgba(255,255,255,0) 70%);
+      bottom: -100px;
+      right: -100px;
+      z-index: -1;
+      filter: blur(40px);
     }
 
     .hero-badge {
-      display: inline-block;
-      padding: 6px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 16px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 100px;
@@ -122,35 +169,88 @@
       font-weight: 600;
       color: var(--accent);
       margin-bottom: 24px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
     }
 
     .hero h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
       margin-bottom: 24px;
-      max-width: 800px;
+      max-width: 900px;
       margin-inline: auto;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
     }
 
     .hero p {
       font-size: clamp(1.1rem, 2vw, 1.25rem);
       color: var(--muted);
-      max-width: 600px;
+      max-width: 650px;
       margin-inline: auto;
+      margin-bottom: 56px;
+    }
+
+    /* Market Data Overview */
+    .market-stats {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
       margin-bottom: 40px;
+    }
+
+    .stat-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 20px 32px;
+      border-radius: var(--radius-md);
+      min-width: 200px;
+      text-align: left;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-label {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .stat-value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      font-family: var(--font-display);
+      color: var(--fg);
+    }
+
+    .stat-trend {
+      font-size: 0.85rem;
+      color: #10B981;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 600;
+    }
+
+    .disclaimer {
+      font-size: 0.8rem;
+      color: var(--muted);
+      opacity: 0.7;
     }
 
     /* Tabs */
     .tabs {
       display: flex;
       justify-content: center;
-      gap: 8px;
-      margin-bottom: 48px;
+      gap: 12px;
+      margin-bottom: 64px;
       flex-wrap: wrap;
     }
 
     .tab-btn {
-      padding: 12px 24px;
+      padding: 14px 28px;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 100px;
@@ -160,6 +260,16 @@
       color: var(--muted);
       cursor: pointer;
       transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .tab-btn svg {
+      width: 18px;
+      height: 18px;
+      fill: currentColor;
+      opacity: 0.7;
     }
 
     .tab-btn:hover {
@@ -184,7 +294,7 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
+      from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
@@ -194,122 +304,190 @@
       gap: 24px;
     }
 
-    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); }
-    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+    .grid-2 { grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
 
-    /* Cards */
-    .card {
+    /* Rich Crypto Cards */
+    .crypto-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: var(--radius-md);
+      border-radius: var(--radius-lg);
       padding: 32px;
-      transition: box-shadow 0.3s, transform 0.3s;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
       display: flex;
       flex-direction: column;
+      position: relative;
+      overflow: hidden;
     }
 
-    .card:hover {
-      box-shadow: 0 12px 24px rgba(0,0,0,0.04);
-      transform: translateY(-2px);
+    .crypto-card:hover {
+      box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+      transform: translateY(-4px);
     }
 
-    .card-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: var(--bg);
+    .crypto-header {
       display: flex;
       align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
+      gap: 16px;
       margin-bottom: 24px;
     }
 
-    .card h3 {
-      font-size: 1.25rem;
-      margin-bottom: 12px;
+    .crypto-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.8rem;
+      font-weight: bold;
+      flex-shrink: 0;
     }
 
-    .card p {
+    .crypto-title h3 {
+      font-size: 1.4rem;
+      margin-bottom: 4px;
+    }
+
+    .ticker {
+      font-size: 0.9rem;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-weight: 600;
+      background: var(--bg);
+      padding: 2px 8px;
+      border-radius: 4px;
+    }
+
+    /* Mini chart illustration */
+    .mini-chart {
+      width: 100%;
+      height: 40px;
+      margin-bottom: 24px;
+      opacity: 0.8;
+    }
+
+    .crypto-card p {
+      color: var(--muted);
+      font-size: 1rem;
       margin-bottom: 24px;
       flex: 1;
     }
 
     .card-meta {
       display: flex;
-      align-items: center;
-      gap: 16px;
+      flex-wrap: wrap;
+      gap: 8px;
       padding-top: 24px;
       border-top: 1px solid var(--border);
     }
 
     .tag {
       font-size: 0.8rem;
-      padding: 4px 10px;
+      padding: 6px 12px;
       background: var(--bg);
-      border-radius: 6px;
+      border-radius: 100px;
       color: var(--fg);
       font-weight: 500;
+      border: 1px solid var(--border);
     }
 
-    /* Timeline */
+    /* Timeline History - Rich version */
+    .history-container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
     .timeline {
       position: relative;
-      padding-left: 32px;
-      margin-top: 24px;
+      padding-left: 48px;
+      margin-top: 40px;
     }
 
     .timeline::before {
       content: '';
       position: absolute;
-      left: 0;
+      left: 11px;
       top: 0;
       bottom: 0;
       width: 2px;
-      background: var(--border);
+      background: linear-gradient(to bottom, var(--accent) 0%, var(--border) 20%, var(--border) 100%);
     }
 
     .timeline-item {
       position: relative;
-      margin-bottom: 48px;
-    }
-
-    .timeline-item:last-child {
-      margin-bottom: 0;
+      margin-bottom: 64px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
     .timeline-item::before {
       content: '';
       position: absolute;
-      left: -37px;
-      top: 4px;
-      width: 12px;
-      height: 12px;
+      left: -43px;
+      top: 36px;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
       background: var(--accent);
-      border: 3px solid var(--surface);
+      border: 4px solid var(--surface);
+      box-shadow: 0 0 0 1px var(--border);
+    }
+
+    .timeline-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
     }
 
     .timeline-year {
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      color: var(--accent);
-      margin-bottom: 8px;
+      color: var(--surface);
+      background: var(--fg);
+      padding: 4px 12px;
+      border-radius: 100px;
     }
 
     .timeline-title {
-      font-size: 1.2rem;
-      margin-bottom: 8px;
+      font-size: 1.4rem;
+      font-weight: 600;
     }
 
     .timeline-desc {
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 1.05rem;
+      line-height: 1.7;
     }
 
-    /* Resource Lists */
+    /* Resource Lists with Logos */
+    .resource-group {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+    }
+
+    .resource-group-title {
+      font-size: 1.2rem;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .resource-group-title svg {
+      width: 24px;
+      height: 24px;
+      fill: var(--accent);
+    }
+
     .resource-list {
       display: flex;
       flex-direction: column;
@@ -319,18 +497,32 @@
     .resource-item {
       display: flex;
       align-items: center;
-      padding: 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
+      padding: 16px;
       border-radius: var(--radius-md);
       text-decoration: none;
       transition: all 0.2s;
+      border: 1px solid transparent;
     }
 
     .resource-item:hover {
-      border-color: var(--muted);
       background: var(--bg);
+      border-color: var(--border);
       transform: translateX(4px);
+    }
+
+    .resource-logo {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: white;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 16px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--fg);
     }
 
     .resource-content {
@@ -351,23 +543,137 @@
     .resource-arrow {
       color: var(--muted);
       font-size: 1.2rem;
+      opacity: 0;
+      transform: translateX(-10px);
+      transition: all 0.2s;
+    }
+
+    .resource-item:hover .resource-arrow {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    /* Literature - Rich Book Cards */
+    .lit-card {
+      display: flex;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      transition: all 0.3s;
+      text-decoration: none;
+      min-height: 240px;
+    }
+
+    .lit-card:hover {
+      box-shadow: 0 16px 32px rgba(0,0,0,0.06);
+      transform: translateY(-4px);
+    }
+
+    .lit-cover {
+      width: 180px;
+      padding: 32px 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: white;
+      position: relative;
+    }
+
+    .lit-cover::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, transparent 100%);
+      opacity: 0.5;
+    }
+
+    .lit-type {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      opacity: 0.9;
+    }
+
+    .lit-cover h4 {
+      font-size: 1.1rem;
+      line-height: 1.3;
+      font-family: var(--font-display);
+    }
+
+    .lit-info {
+      padding: 32px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .lit-info h3 {
+      font-size: 1.5rem;
+      color: var(--fg);
+      margin-bottom: 12px;
+    }
+
+    .author {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .lit-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin-bottom: auto;
+    }
+    
+    .lit-action {
+      margin-top: 24px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--fg);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--border);
-      padding: 48px 0;
-      margin-top: 80px;
+      padding: 64px 0;
+      margin-top: 100px;
       text-align: center;
+    }
+    
+    .footer-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-family: var(--font-display);
+      margin-bottom: 16px;
+      color: var(--fg);
+    }
+
+    footer p {
       color: var(--muted);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
     }
 
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      .hero { padding: 60px 0 40px; }
-      .tabs { gap: 12px; }
-      .tab-btn { flex: 1 1 calc(50% - 12px); text-align: center; }
+      .hero { padding: 80px 0 60px; }
+      .tabs { gap: 8px; }
+      .tab-btn { flex: 1 1 calc(50% - 8px); justify-content: center; }
+      .lit-card { flex-direction: column; }
+      .lit-cover { width: 100%; height: 160px; }
+      .market-stats { flex-direction: column; align-items: center; }
+      .stat-box { width: 100%; max-width: 320px; }
     }
   </style>
 </head>
@@ -380,152 +686,383 @@
         CryptoBase
       </div>
       <nav class="nav-links">
-        <a href="#" onclick="switchTab('basics'); return false;" class="active">基础知识</a>
-        <a href="#" onclick="switchTab('history'); return false;">发展史</a>
-        <a href="#" onclick="switchTab('resources'); return false;">资源导航</a>
+        <a href="#" onclick="switchTab('basics'); return false;" class="active">核心生态</a>
+        <a href="#" onclick="switchTab('history'); return false;">发展纪思</a>
+        <a href="#" onclick="switchTab('resources'); return false;">链上资源</a>
         <a href="#" onclick="switchTab('literature'); return false;">经典文献</a>
       </nav>
     </div>
   </header>
 
-  <main class="container">
-    <section class="hero">
-      <div class="hero-badge">Web3 知识引擎</div>
-      <h1>理解加密货币的底层逻辑</h1>
-      <p>从比特币的历史起源，到主流公链的技术原理。探索去中心化网络的运作机制，访问最权威的文献与资源。</p>
+  <main>
+    <section class="hero container">
+      <div class="hero-bg-pattern"></div>
+      <div class="hero-blob"></div>
+      <div class="hero-blob-2"></div>
+      
+      <div class="hero-badge">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Web3 知识引擎 v2.0
+      </div>
+      <h1>探索去中心化网络的底层逻辑</h1>
+      <p>抛开市场的喧嚣，回归技术的本质。全景解析加密货币的运作机制、共识协议，以及驱动下一代互联网的权威文献与核心资源。</p>
+
+      <div class="market-stats">
+        <div class="stat-box">
+          <div class="stat-label">全球加密市值概览</div>
+          <div class="stat-value">$ 2.4T+</div>
+          <div class="stat-trend">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            宏观数据参考
+          </div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">活跃公链及 L2 网络</div>
+          <div class="stat-value">150+</div>
+          <div class="stat-trend" style="color: var(--muted);">涵盖 PoW / PoS / PoH</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">日均链上交互体量</div>
+          <div class="stat-value">$ 80B+</div>
+          <div class="stat-trend" style="color: var(--muted);">含 DEX 及衍生品</div>
+        </div>
+      </div>
+      <p class="disclaimer">注：以上为 2026 年度行业宏观预估数据，非实时市场报价，仅供科普参考。</p>
     </section>
 
-    <div class="tabs">
-      <button class="tab-btn active" data-target="basics">核心知识</button>
-      <button class="tab-btn" data-target="history">发展史</button>
-      <button class="tab-btn" data-target="resources">资源导航</button>
-      <button class="tab-btn" data-target="literature">经典文献</button>
-    </div>
+    <div class="container">
+      <div class="tabs">
+        <button class="tab-btn active" data-target="basics">
+          <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          核心生态
+        </button>
+        <button class="tab-btn" data-target="history">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          发展纪思
+        </button>
+        <button class="tab-btn" data-target="resources">
+          <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          链上资源
+        </button>
+        <button class="tab-btn" data-target="literature">
+          <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          经典文献
+        </button>
+      </div>
 
-    <!-- 核心知识 -->
-    <div id="basics" class="section-content active">
-      <div class="grid grid-3">
-        <div class="card">
-          <div class="card-icon">₿</div>
-          <h3>Bitcoin (BTC)</h3>
-          <p>首个去中心化的点对点加密货币，通过工作量证明（PoW）机制解决双花问题，被誉为“数字黄金”。</p>
-          <div class="card-meta">
-            <span class="tag">PoW</span>
-            <span class="tag">价值存储</span>
+      <!-- 核心生态 (Basics) -->
+      <div id="basics" class="section-content active">
+        <div class="grid grid-2">
+          
+          <!-- Bitcoin -->
+          <div class="crypto-card">
+            <div class="crypto-header">
+              <div class="crypto-icon" style="background: var(--accent-btc);">₿</div>
+              <div class="crypto-title">
+                <h3>Bitcoin</h3>
+                <span class="ticker">BTC</span>
+              </div>
+            </div>
+            <!-- Decorative Chart -->
+            <svg class="mini-chart" viewBox="0 0 200 40" preserveAspectRatio="none">
+              <path d="M0,35 C30,35 40,15 70,25 C100,35 120,5 150,15 C180,25 190,5 200,10 L200,40 L0,40 Z" fill="rgba(247, 147, 26, 0.1)"/>
+              <path d="M0,35 C30,35 40,15 70,25 C100,35 120,5 150,15 C180,25 190,5 200,10" fill="none" stroke="var(--accent-btc)" stroke-width="2"/>
+            </svg>
+            <p>首个去中心化的点对点加密货币，由中本聪于2008年提出。通过工作量证明（PoW）机制和 SHA-256 算法解决双花问题，其极度稀缺的特性（2100万枚上限）使其被广泛视为“数字黄金”。</p>
+            <div class="card-meta">
+              <span class="tag">PoW 共识</span>
+              <span class="tag">价值存储</span>
+              <span class="tag">SHA-256</span>
+              <span class="tag">Lightning Network</span>
+            </div>
           </div>
-        </div>
-        <div class="card">
-          <div class="card-icon">⟠</div>
-          <h3>Ethereum (ETH)</h3>
-          <p>支持智能合约的开源区块链平台。允许开发者构建去中心化应用（DApp），已转型为权益证明（PoS）机制。</p>
-          <div class="card-meta">
-            <span class="tag">PoS</span>
-            <span class="tag">智能合约</span>
+
+          <!-- Ethereum -->
+          <div class="crypto-card">
+            <div class="crypto-header">
+              <div class="crypto-icon" style="background: var(--accent-eth);">⟠</div>
+              <div class="crypto-title">
+                <h3>Ethereum</h3>
+                <span class="ticker">ETH</span>
+              </div>
+            </div>
+            <svg class="mini-chart" viewBox="0 0 200 40" preserveAspectRatio="none">
+              <path d="M0,25 C40,10 60,35 100,20 C140,5 160,25 200,15 L200,40 L0,40 Z" fill="rgba(98, 126, 234, 0.1)"/>
+              <path d="M0,25 C40,10 60,35 100,20 C140,5 160,25 200,15" fill="none" stroke="var(--accent-eth)" stroke-width="2"/>
+            </svg>
+            <p>全球最大的支持智能合约的开源区块链平台。由 Vitalik Buterin 提出，允许开发者构建去中心化应用（DApp）。2022年成功完成 The Merge，全面转型为更环保的权益证明（PoS）机制。</p>
+            <div class="card-meta">
+              <span class="tag">PoS 共识</span>
+              <span class="tag">智能合约 (EVM)</span>
+              <span class="tag">DeFi & NFT 基建</span>
+            </div>
           </div>
+
+          <!-- Solana -->
+          <div class="crypto-card">
+            <div class="crypto-header">
+              <div class="crypto-icon" style="background: var(--accent-sol); color: #000;">◎</div>
+              <div class="crypto-title">
+                <h3>Solana</h3>
+                <span class="ticker">SOL</span>
+              </div>
+            </div>
+            <svg class="mini-chart" viewBox="0 0 200 40" preserveAspectRatio="none">
+              <path d="M0,15 C20,35 50,5 90,25 C130,45 160,10 200,20 L200,40 L0,40 Z" fill="rgba(20, 241, 149, 0.15)"/>
+              <path d="M0,15 C20,35 50,5 90,25 C130,45 160,10 200,20" fill="none" stroke="var(--accent-sol)" stroke-width="2"/>
+            </svg>
+            <p>以极致性能和极低交互成本著称的单层（Layer 1）区块链。采用创新的历史证明（PoH）与权益证明（PoS）结合机制，专为高频并发应用、去中心化金融（DeFi）和消费级 Web3 应用设计。</p>
+            <div class="card-meta">
+              <span class="tag">PoH + PoS</span>
+              <span class="tag">超高吞吐量 (TPS)</span>
+              <span class="tag">低延迟</span>
+            </div>
+          </div>
+
+          <!-- Binance Coin -->
+          <div class="crypto-card">
+            <div class="crypto-header">
+              <div class="crypto-icon" style="background: var(--accent-bnb); color: #000;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.656L1.875 12 12 21.344 22.125 12 12 2.656zm0 3.312L18.469 12 12 18.031 5.531 12 12 5.968z"/></svg>
+              </div>
+              <div class="crypto-title">
+                <h3>BNB Chain</h3>
+                <span class="ticker">BNB</span>
+              </div>
+            </div>
+            <svg class="mini-chart" viewBox="0 0 200 40" preserveAspectRatio="none">
+              <path d="M0,20 C40,20 60,10 100,15 C140,20 170,5 200,10 L200,40 L0,40 Z" fill="rgba(243, 186, 47, 0.1)"/>
+              <path d="M0,20 C40,20 60,10 100,15 C140,20 170,5 200,10" fill="none" stroke="var(--accent-bnb)" stroke-width="2"/>
+            </svg>
+            <p>由全球最大加密交易所币安发起的生态网络，其核心 BSC (BNB Smart Chain) 兼容 EVM。采用委托权益证明（PoSA）机制，在去中心化与效率之间取得平衡，拥有庞大的应用生态与用户基数。</p>
+            <div class="card-meta">
+              <span class="tag">PoSA 共识</span>
+              <span class="tag">EVM 兼容</span>
+              <span class="tag">生态代币</span>
+            </div>
+          </div>
+
         </div>
-        <div class="card">
-          <div class="card-icon">◎</div>
-          <h3>Solana (SOL)</h3>
-          <p>以高性能和低成本著称的单层区块链，采用独特的历史证明（PoH）机制，专为高频应用和去中心化金融设计。</p>
-          <div class="card-meta">
-            <span class="tag">PoH</span>
-            <span class="tag">高吞吐量</span>
+      </div>
+
+      <!-- 发展史 (History) -->
+      <div id="history" class="section-content">
+        <div class="history-container">
+          <div style="text-align: center; margin-bottom: 48px;">
+            <h2>密码朋克到去中心化金融</h2>
+            <p style="color: var(--muted); margin-top: 12px; font-size: 1.1rem;">一部关于信任重构与技术迭代的简史</p>
+          </div>
+          
+          <div class="timeline">
+            
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-year">2008.10</span>
+                <span class="timeline-title">创世蓝图：比特币白皮书发布</span>
+              </div>
+              <div class="timeline-desc">
+                在密码朋克（Cypherpunk）邮件列表中，化名为“中本聪”（Satoshi Nakamoto）的未知人物发布了《比特币：一种点对点的电子现金系统》。这篇只有9页的论文，首次提出了将非对称加密、哈希树与工作量证明结合，以解决分布式网络中拜占庭将军问题和双花问题的构想。
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-year">2009.01</span>
+                <span class="timeline-title">创世区块与硬编码新闻</span>
+              </div>
+              <div class="timeline-desc">
+                比特币网络正式上线，中本聪亲自挖出了包含 50 个 BTC 的“创世区块”（Genesis Block）。在区块的 Coinbase 数据中，中本聪永久地刻下了一句话：“The Times 03/Jan/2009 Chancellor on brink of second bailout for banks”（泰晤士报：财政大臣正处于实施第二轮银行紧急救助的边缘），以此表达对传统中心化金融体系脆弱性的讽刺。
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-year">2015.07</span>
+                <span class="timeline-title">智能合约：以太坊的诞生</span>
+              </div>
+              <div class="timeline-desc">
+                由于比特币脚本语言的非图灵完备性，其难以构建复杂的应用。年轻的极客 Vitalik Buterin 联合团队正式启动了以太坊主网。以太坊引入了以太坊虚拟机（EVM），允许任何人在区块链上编写和部署“智能合约”（Smart Contracts），这标志着区块链技术从单一的货币属性（区块链 1.0）正式迈入通用计算平台时代（区块链 2.0）。
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-year">2020.06</span>
+                <span class="timeline-title">DeFi Summer 寒武纪大爆发</span>
+              </div>
+              <div class="timeline-desc">
+                随着 Uniswap 的自动做市商（AMM）模型成熟以及 Compound 推出流动性挖矿（Yield Farming）机制，去中心化金融（DeFi）迎来了爆发式增长。借贷、DEX、合成资产等无须许可的金融乐高在链上迅速拼接，吸引了数百亿美元的资金沉淀，彻底验证了智能合约在金融领域的巨大潜力。
+              </div>
+            </div>
+
+            <div class="timeline-item">
+              <div class="timeline-header">
+                <span class="timeline-year">2022.09</span>
+                <span class="timeline-title">The Merge：以太坊历史性合并</span>
+              </div>
+              <div class="timeline-desc">
+                以太坊成功完成代号为“The Merge”的升级，将共识机制从耗能巨大的工作量证明（PoW）切换为权益证明（PoS）。这一技术壮举在不中断网络运行的情况下完成，使以太坊的能源消耗降低了 99.95%，为后续的 Layer 2 扩容和分片技术铺平了道路。
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- 发展史 -->
-    <div id="history" class="section-content">
-      <div class="card" style="max-width: 800px; margin: 0 auto;">
-        <h2 style="margin-bottom: 32px;">加密货币演进史</h2>
-        <div class="timeline">
-          <div class="timeline-item">
-            <div class="timeline-year">2008</div>
-            <div class="timeline-title">比特币白皮书发布</div>
-            <div class="timeline-desc">中本聪（Satoshi Nakamoto）发布了《比特币：一种点对点的电子现金系统》，首次提出了区块链的概念。</div>
+      <!-- 资源导航 (Resources) -->
+      <div id="resources" class="section-content">
+        <div class="grid grid-2">
+          
+          <div class="resource-group">
+            <h3 class="resource-group-title">
+              <svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+              官方门户与文档
+            </h3>
+            <div class="resource-list">
+              <a href="https://bitcoin.org/" class="resource-item">
+                <div class="resource-logo">₿</div>
+                <div class="resource-content">
+                  <div class="resource-title">Bitcoin.org</div>
+                  <div class="resource-desc">比特币核心开源项目及基础节点运行文档。</div>
+                </div>
+                <div class="resource-arrow">→</div>
+              </a>
+              <a href="https://ethereum.org/" class="resource-item">
+                <div class="resource-logo">⟠</div>
+                <div class="resource-content">
+                  <div class="resource-title">Ethereum.org</div>
+                  <div class="resource-desc">以太坊官方文档、教程、EIP 提案及开发者资源。</div>
+                </div>
+                <div class="resource-arrow">→</div>
+              </a>
+              <a href="https://solana.com/" class="resource-item">
+                <div class="resource-logo" style="color: var(--accent-sol); background: #111;">◎</div>
+                <div class="resource-content">
+                  <div class="resource-title">Solana.com</div>
+                  <div class="resource-desc">Solana 生态文档，包含 Rust/C 智能合约开发指南。</div>
+                </div>
+                <div class="resource-arrow">→</div>
+              </a>
+            </div>
           </div>
-          <div class="timeline-item">
-            <div class="timeline-year">2009</div>
-            <div class="timeline-title">创世区块诞生</div>
-            <div class="timeline-desc">比特币网络正式上线，中本聪挖出创世区块，并留下了关于银行救市的新闻头条作为时间戳。</div>
+
+          <div class="resource-group">
+            <h3 class="resource-group-title">
+              <svg viewBox="0 0 24 24"><polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21"></polygon><line x1="9" y1="3" x2="9" y2="21"></line><line x1="15" y1="3" x2="15" y2="21"></line></svg>
+              链上数据与浏览器
+            </h3>
+            <div class="resource-list">
+              <a href="https://www.coingecko.com/" class="resource-item">
+                <div class="resource-logo" style="color: #8CC63F;">🦎</div>
+                <div class="resource-content">
+                  <div class="resource-title">CoinGecko</div>
+                  <div class="resource-desc">全球全面的加密货币市值、代码活动及独立数据追踪。</div>
+                </div>
+                <div class="resource-arrow">→</div>
+              </a>
+              <a href="https://etherscan.io/" class="resource-item">
+                <div class="resource-logo" style="background: #232940; color: white;">E</div>
+                <div class="resource-content">
+                  <div class="resource-title">Etherscan</div>
+                  <div class="resource-desc">最权威的以太坊区块浏览器，可查询交易、合约代码与 Gas。</div>
+                </div>
+                <div class="resource-arrow">→</div>
+              </a>
+              <a href="https://defillama.com/" class="resource-item">
+                <div class="resource-logo" style="background: #2D3748; color: white;">🦙</div>
+                <div class="resource-content">
+                  <div class="resource-title">DeFiLlama</div>
+                  <div class="resource-desc">开源的 DeFi TVL 数据大屏，追踪各协议锁仓量及收益率。</div>
+                </div>
+                <div class="resource-arrow">→</div>
+              </a>
+            </div>
           </div>
-          <div class="timeline-item">
-            <div class="timeline-year">2015</div>
-            <div class="timeline-title">以太坊主网上线</div>
-            <div class="timeline-desc">Vitalik Buterin 提出并上线了以太坊，引入了图灵完备的智能合约，开启了区块链 2.0 时代。</div>
-          </div>
-          <div class="timeline-item">
-            <div class="timeline-year">2020</div>
-            <div class="timeline-title">DeFi Summer</div>
-            <div class="timeline-desc">去中心化金融（DeFi）爆发，自动做市商（AMM）和流动性挖矿机制彻底改变了链上交易与借贷。</div>
-          </div>
+
         </div>
       </div>
-    </div>
 
-    <!-- 资源导航 -->
-    <div id="resources" class="section-content">
-      <div class="grid grid-2">
-        <div class="resource-list">
-          <h3 style="margin-bottom: 24px; color: var(--muted); font-size: 1rem;">官方网站</h3>
-          <a href="https://bitcoin.org/" class="resource-item">
-            <div class="resource-content">
-              <div class="resource-title">Bitcoin.org</div>
-              <div class="resource-desc">比特币核心开源项目及基础文档。</div>
+      <!-- 经典文献 (Literature) -->
+      <div id="literature" class="section-content">
+        <div class="grid grid-2">
+          
+          <a href="https://bitcoin.org/bitcoin.pdf" class="lit-card">
+            <div class="lit-cover" style="background: linear-gradient(135deg, #E65C00, #F9D423);">
+              <span class="lit-type">PDF · 9 Pages</span>
+              <h4>Bitcoin: A Peer-to-Peer Electronic Cash System</h4>
             </div>
-            <div class="resource-arrow">→</div>
-          </a>
-          <a href="https://ethereum.org/" class="resource-item">
-            <div class="resource-content">
-              <div class="resource-title">Ethereum.org</div>
-              <div class="resource-desc">以太坊官方文档、教程及开发者资源。</div>
+            <div class="lit-info">
+              <h3>比特币白皮书</h3>
+              <div class="author">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                中本聪 (Satoshi Nakamoto) · 2008
+              </div>
+              <p class="lit-desc">这篇跨时代的论文奠定了去中心化货币的基础。以极其简洁和严谨的方式，阐述了工作量证明（PoW）、默克尔树和点对点网络如何结合来解决双重支付问题，无需任何可信第三方。</p>
+              <div class="lit-action">阅读原版文献 →</div>
             </div>
-            <div class="resource-arrow">→</div>
           </a>
-        </div>
-        <div class="resource-list">
-          <h3 style="margin-bottom: 24px; color: var(--muted); font-size: 1rem;">数据与浏览器</h3>
-          <a href="https://www.coingecko.com/" class="resource-item">
-            <div class="resource-content">
-              <div class="resource-title">CoinGecko</div>
-              <div class="resource-desc">全面的加密货币市值、代码及独立数据追踪。</div>
-            </div>
-            <div class="resource-arrow">→</div>
-          </a>
-          <a href="https://etherscan.io/" class="resource-item">
-            <div class="resource-content">
-              <div class="resource-title">Etherscan</div>
-              <div class="resource-desc">最权威的以太坊区块浏览器与数据分析平台。</div>
-            </div>
-            <div class="resource-arrow">→</div>
-          </a>
-        </div>
-      </div>
-    </div>
 
-    <!-- 经典文献 -->
-    <div id="literature" class="section-content">
-      <div class="grid grid-2">
-        <a href="https://bitcoin.org/bitcoin.pdf" class="card" style="text-decoration: none;">
-          <div style="color: var(--accent); margin-bottom: 16px; font-weight: 600;">PDF Document</div>
-          <h3 style="font-size: 1.5rem; margin-bottom: 12px; color: var(--fg);">比特币：一种点对点的电子现金系统</h3>
-          <p style="color: var(--fg); font-weight: 500;">中本聪 (2008)</p>
-          <p style="font-size: 0.95rem; margin-top: 12px; margin-bottom: 0;">奠定了去中心化货币的基础，详细阐述了工作量证明、默克尔树和点对点网络的设计。</p>
-        </a>
-        <a href="https://ethereum.org/en/whitepaper/" class="card" style="text-decoration: none;">
-          <div style="color: var(--accent); margin-bottom: 16px; font-weight: 600;">Wiki / Paper</div>
-          <h3 style="font-size: 1.5rem; margin-bottom: 12px; color: var(--fg);">以太坊白皮书</h3>
-          <p style="color: var(--fg); font-weight: 500;">Vitalik Buterin (2014)</p>
-          <p style="font-size: 0.95rem; margin-top: 12px; margin-bottom: 0;">介绍了下一代智能合约和去中心化应用平台的底层构架与设计哲学。</p>
-        </a>
+          <a href="https://ethereum.org/en/whitepaper/" class="lit-card">
+            <div class="lit-cover" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">
+              <span class="lit-type">Web · Wiki</span>
+              <h4>A Next-Generation Smart Contract and Decentralized Application Platform</h4>
+            </div>
+            <div class="lit-info">
+              <h3>以太坊白皮书</h3>
+              <div class="author">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Vitalik Buterin · 2014
+              </div>
+              <p class="lit-desc">引入了图灵完备的“以太坊虚拟机（EVM）”概念。文章详细描述了以太坊为何以及如何超越了比特币的简单支付功能，成为能够构建任何去中心化应用（DApp）的底层基石。</p>
+              <div class="lit-action">阅读原版文献 →</div>
+            </div>
+          </a>
+
+          <a href="https://solana.com/solana-whitepaper.pdf" class="lit-card">
+            <div class="lit-cover" style="background: linear-gradient(135deg, #14F195, #9945FF);">
+              <span class="lit-type">PDF · 32 Pages</span>
+              <h4>Solana: A new architecture for a high performance blockchain</h4>
+            </div>
+            <div class="lit-info">
+              <h3>Solana 白皮书</h3>
+              <div class="author">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Anatoly Yakovenko · 2017
+              </div>
+              <p class="lit-desc">提出了历史证明（Proof of History, PoH）作为一种时钟算法，解决了分布式系统中的时序问题，大幅降低了共识消息的通信开销，论证了如何在无需分片的情况下实现数万 TPS。</p>
+              <div class="lit-action">阅读原版文献 →</div>
+            </div>
+          </a>
+          
+          <a href="https://uniswap.org/whitepaper.pdf" class="lit-card">
+            <div class="lit-cover" style="background: linear-gradient(135deg, #ff007a, #a2004d);">
+              <span class="lit-type">PDF · Core DeFi</span>
+              <h4>Uniswap v2 Core</h4>
+            </div>
+            <div class="lit-info">
+              <h3>Uniswap v2 白皮书</h3>
+              <div class="author">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                Hayden Adams 等 · 2020
+              </div>
+              <p class="lit-desc">去中心化交易所的圣经级文档。深入解释了恒定乘积做市商模型 (x * y = k)，以及 ERC20/ERC20 流动性池、时间加权平均价格 (TWAP) 预言机等深刻改变 DeFi 轨迹的技术。</p>
+              <div class="lit-action">阅读原版文献 →</div>
+            </div>
+          </a>
+
+        </div>
       </div>
     </div>
   </main>
 
   <footer>
     <div class="container">
-      <p>© 2026 CryptoBase. 此平台仅作知识科普，不构成任何财务建议。</p>
+      <div class="footer-logo">
+        <div class="logo-icon" style="width: 24px; height: 24px; font-size: 0.8rem; box-shadow: none;">C</div>
+        CryptoBase
+      </div>
+      <p>© 2026 CryptoBase. The Web3 Knowledge Engine.</p>
+      <p style="margin-top: 8px; font-size: 0.85rem; opacity: 0.6;">此平台内容仅供开源技术与架构科普学习，不构成任何投资或财务建议。</p>
     </div>
   </footer>
 
@@ -544,7 +1081,7 @@
         }
       });
 
-      // Update nav links
+      // Update header nav links
       navLinks.forEach(link => {
         if(link.getAttribute('onclick') && link.getAttribute('onclick').includes(targetId)) {
           link.classList.add('active');
@@ -561,6 +1098,7 @@
       }
     }
 
+    // Attach click events
     tabBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         switchTab(btn.getAttribute('data-target'));
